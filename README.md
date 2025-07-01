@@ -1,2 +1,2 @@
 # IMCO-Trader-Your-Trusted-Online-Shopping-Hub
-IMCO Trader – Your Trusted Online Shopping Hub. A modern, responsive eCommerce website offering a wide range of products, secure checkout, and user-friendly navigation. Built using HTML, CSS, JavaScript, and Tailwind CSS, optimized for performance and usability.
+IMCO Trader – Your Trusted Online Shopping Hub. A modern, responsive eCommerce website offering a wide range of products, secure checkout, and user-friendly navigation. Built using HTML, CSS, JavaScript, React also use Formik and Yup for Form Validation and also use React Route Dom for advancement  and Tailwind CSS, optimized for performance and usability.
