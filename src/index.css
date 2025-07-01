@@ -1,0 +1,105 @@
+@import "tailwindcss";
+@theme {
+  --color-primary: #6A1B9A;
+  --color-primary-sec: #673AB7;
+  --color-primary-fav: #ff5252;
+  --color-primary-third: #E54C2C;
+  --color-primary-four: #4CAF50;
+  --color-primary-five: #FF9800;
+  --color-primary-six: #212121;
+  --color-primary-bg: #FAF7F2;
+  --color-primary-bg-2: #91AA73;
+}
+
+body {
+  @apply bg-[#faf7f2];
+}
+.container {
+  width: 90%;
+  margin: auto;
+}
+
+.body{
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+
+
+/* Custom Scrollbar for Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg,#6A1B9A 0%, #673AB7 100%);
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #6A1B9A 0%, #673AB7 100%);
+}
+
+/* Thin scrollbar variant */
+.thin-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  border: none;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* E-commerce theme scrollbar */
+.ecommerce-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ecommerce-scrollbar::-webkit-scrollbar-track {
+  background: #FAF7F2;
+  border-radius: 4px;
+}
+
+.ecommerce-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ff5252, #E54C2C);
+  border-radius: 4px;
+}
+
+.ecommerce-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ff5252, #E54C2C);
+}
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #6A1B9A #FAF7F2;
+}
+
+/* Smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scroll snap for product sections */
+.product-section {
+  scroll-snap-type: y mandatory;
+}
+
+.product-item {
+  scroll-snap-align: start;
+}
