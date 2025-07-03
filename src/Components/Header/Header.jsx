@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { assets } from "../../assets/assets";
 import Navigation from "./Navigation";
 import SimpleSearchInput from "./Search";
@@ -17,6 +18,7 @@ const Header = () => {
     setIsMobileSearchOpen(!isMobileSearchOpen);
     setIsMobileMenuOpen(false);
   };
+  const navigate = useNavigate()
 
   return (
     <>
@@ -46,11 +48,15 @@ const Header = () => {
               <div className="flex items-center space-x-6">
                 {/* Auth Buttons */}
                 <div className="flex items-center space-x-2 text-primary-six">
-                  <button className="hover:text-primary text-sm font-medium cursor-pointer transition-colors">
+                  <button 
+                  onClick={ ()=> {navigate("/login")}}
+                  className="hover:text-primary text-sm font-medium cursor-pointer transition-colors">
                     Login
                   </button>
                   <span className="text-primary-six">|</span>
-                  <button className="hover:text-primary text-sm font-medium text-primary-six cursor-pointer transition-colors">
+                  <button
+                  onClick={ ()=>{navigate('/register')}}
+                  className="hover:text-primary text-sm font-medium text-primary-six cursor-pointer transition-colors">
                     Register
                   </button>
                 </div>

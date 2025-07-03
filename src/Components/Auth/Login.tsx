@@ -347,15 +347,15 @@ const LoginPage = () => {
             <div className="space-y-2 text-sm text-primary-six">
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-4 w-4 text-green-600" />
-                <span>Secure and encrypted transactions</span>
+                <span>Safe and encrypted payments, every time you shop.</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-4 w-4 text-green-600" />
-                <span>24/7 customer support</span>
+                <span>24/7 support — we're just a message away.</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle className="h-4 w-4 text-green-600" />
-                <span>Professional trading platform</span>
+                <span>A reliable and secure shopping experience.</span>
               </div>
             </div>
           </div>

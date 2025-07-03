@@ -40,7 +40,7 @@ const Navigation = () => {
 
   return (
     <>
-      <header className="bg-primary-bg shadow-sm border-b border-gray-200 relative z-50">
+      <header className={`bg-primary-bg shadow-sm border-b border-gray-200 relative z-50 ${isSidebarOpen ? 'blur-sm' : ''}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Mobile menu button */}
@@ -164,103 +164,86 @@ const Navigation = () => {
         </div>
       </header>
 
-      {/* Sidebar Overlay */}
+      {/* Sidebar Overlay with Enhanced Blur */}
       {isSidebarOpen && (
         <div 
-          className="fixed inset-0 bg-black bg-opacity-60 z-40 transition-opacity duration-300 backdrop-blur-sm"
+          className="fixed inset-0 bg-black/40 z-40 transition-all duration-300 backdrop-blur-md"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
-      {/* Sidebar Menu */}
-      <div className={`fixed top-0 left-0 h-full w-96 bg-white shadow-2xl z-50 transform transition-all duration-300 ease-out ${
+      {/* Sidebar Menu with Perfect Blur Background */}
+      <div className={`fixed top-0 left-0 h-full w-96 shadow-2xl z-50 transform transition-all duration-300 ease-out ${
         isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
-        <div className="bg-gradient-to-r from-primary to-pink-600 p-6 text-white">
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-xl font-bold">All Categories</h2>
-              <p className="text-purple-100 text-sm mt-1">Discover our complete collection</p>
-            </div>
-            <button
-              onClick={() => setIsSidebarOpen(false)}
-              className="p-2 rounded-lg text-white hover:bg-primary hover:bg-opacity-20 transition-all duration-200"
-            >
-              <X className="h-6 w-6" />
-            </button>
-          </div>
-        </div>
-
-        <div className="overflow-y-auto h-full pb-32 bg-gray-50">
-          {allCategories.map((category, index) => (
-            <div key={category.name} className="relative bg-white mb-2 mx-4 mt-4 rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div 
-                className={`flex items-center justify-between p-4 cursor-pointer transition-all duration-200 ${
-                  sidebarActiveCategory === index ? 'bg-gradient-to-r from-purple-50 to-pink-50' : 'hover:bg-gray-50'
-                }`}
-                onClick={() => handleSidebarCategoryClick(index)}
-                onMouseEnter={() => setHoveredSidebarCategory(index)}
-                onMouseLeave={() => setHoveredSidebarCategory(null)}
-              >
-                <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl flex items-center justify-center">
-                    <span className="text-2xl filter drop-shadow-sm">{category.emoji}</span>
-                  </div>
-                  <div>
-                    <span className="text-base font-semibold text-primary-third">{category.name}</span>
-                    {category.featured && (
-                      <div className="flex items-center space-x-1 mt-1">
-                        <Sparkles className="h-3 w-3 text-primary" />
-                        <span className="text-xs font-semibold text-primary">Featured</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <div className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full font-medium">
-                    {category.subcategories.length}
-                  </div>
-                  <ChevronRight className={`h-5 w-5 text-gray-400 transition-transform duration-200 ${
-                    sidebarActiveCategory === index ? 'rotate-90 text-primary' : 'group-hover:text-primary'
-                  }`} />
-                </div>
+        {/* Sidebar Background with Glassmorphism Effect */}
+        <div className="absolute inset-0 bg-white/95 backdrop-blur-xl border-r border-white/20"></div>
+        
+        {/* Sidebar Content */}
+        <div className="relative h-full">
+          {/* Header */}
+          <div className="bg-gradient-to-r from-primary to-pink-600 p-6 text-white relative">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-xl font-bold">All Categories</h2>
+                <p className="text-purple-100 text-sm mt-1">Discover our complete collection</p>
               </div>
+              <button
+                onClick={() => setIsSidebarOpen(false)}
+                className="p-2 rounded-lg text-white hover:bg-white/20 transition-all duration-200 backdrop-blur-sm"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+          </div>
 
-              {/* Subcategories - Always visible when clicked */}
-              {sidebarActiveCategory === index && (
-                <div className="bg-gradient-to-r from-gray-50 to-white border-t border-gray-100 p-4 space-y-2">
-                  <div className="grid gap-2">
-                    {category.subcategories.map((subcategory, subIndex) => (
-                      <a
-                        key={subcategory}
-                        href="#"
-                        className="flex items-center justify-between text-sm text-gray-700 hover:text-primary hover:bg-white px-4 py-3 rounded-lg transition-all duration-200 font-medium border border-transparent hover:border-purple-100 hover:shadow-sm group"
-                      >
-                        <span>{subcategory}</span>
-                        <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-primary transform group-hover:translate-x-1 transition-all duration-200" />
-                      </a>
-                    ))}
+          {/* Categories List */}
+          <div className="overflow-y-auto h-full pb-32 bg-gradient-to-b from-gray-50/80 to-white/80 backdrop-blur-sm">
+            {allCategories.map((category, index) => (
+              <div key={category.name} className="relative bg-white/90 backdrop-blur-sm mb-2 mx-4 mt-4 rounded-xl shadow-sm border border-gray-100/50 overflow-hidden">
+                <div 
+                  className={`flex items-center justify-between p-4 cursor-pointer transition-all duration-200 ${
+                    sidebarActiveCategory === index 
+                      ? 'bg-gradient-to-r from-purple-50/90 to-pink-50/90 backdrop-blur-sm' 
+                      : 'hover:bg-gray-50/80 backdrop-blur-sm'
+                  }`}
+                  onClick={() => handleSidebarCategoryClick(index)}
+                  onMouseEnter={() => setHoveredSidebarCategory(index)}
+                  onMouseLeave={() => setHoveredSidebarCategory(null)}
+                >
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-purple-100/90 to-pink-100/90 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/50">
+                      <span className="text-2xl filter drop-shadow-sm">{category.emoji}</span>
+                    </div>
+                    <div>
+                      <span className="text-base font-semibold text-primary-third">{category.name}</span>
+                      {category.featured && (
+                        <div className="flex items-center space-x-1 mt-1">
+                          <Sparkles className="h-3 w-3 text-primary" />
+                          <span className="text-xs font-semibold text-primary">Featured</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <div className="text-xs bg-gray-100/80 backdrop-blur-sm text-gray-600 px-2 py-1 rounded-full font-medium border border-white/50">
+                      {category.subcategories.length}
+                    </div>
+                    <ChevronRight className={`h-5 w-5 text-gray-400 transition-transform duration-200 ${
+                      sidebarActiveCategory === index ? 'rotate-90 text-primary' : 'group-hover:text-primary'
+                    }`} />
                   </div>
                 </div>
-              )}
 
-              {/* Hover overlay for additional subcategories */}
-              {hoveredSidebarCategory === index && sidebarActiveCategory !== index && (
-                <div className="absolute left-full top-0 w-80 bg-white shadow-2xl border border-gray-200 rounded-xl ml-4 z-60 overflow-hidden">
-                  <div className="bg-gradient-to-r from-primary to-pink-600 p-4 text-white">
-                    <h3 className="text-lg font-bold flex items-center space-x-2">
-                      <span className="text-xl">{category.emoji}</span>
-                      <span>{category.name}</span>
-                    </h3>
-                    <p className="text-purple-100 text-sm mt-1">{category.subcategories.length} subcategories available</p>
-                  </div>
-                  <div className="p-4 max-h-80 overflow-y-auto">
-                    <div className="space-y-2">
-                      {category.subcategories.map((subcategory) => (
+                {/* Subcategories - Always visible when clicked */}
+                {sidebarActiveCategory === index && (
+                  <div className="bg-gradient-to-r from-gray-50/80 to-white/90 backdrop-blur-sm border-t border-gray-100/50 p-4 space-y-2">
+                    <div className="grid gap-2">
+                      {category.subcategories.map((subcategory, subIndex) => (
                         <a
                           key={subcategory}
                           href="#"
-                          className="flex items-center justify-between text-sm text-gray-700 hover:text-primary hover:bg-gradient-to-r hover:from-purple-50 hover:to-pink-50 px-4 py-3 rounded-lg transition-all duration-200 font-medium border border-transparent hover:border-purple-100 group"
+                          className="flex items-center justify-between text-sm text-gray-700 hover:text-primary hover:bg-white/80 backdrop-blur-sm px-4 py-3 rounded-lg transition-all duration-200 font-medium border border-transparent hover:border-purple-100/50 hover:shadow-sm group"
                         >
                           <span>{subcategory}</span>
                           <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-primary transform group-hover:translate-x-1 transition-all duration-200" />
@@ -268,10 +251,37 @@ const Navigation = () => {
                       ))}
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
+                )}
+
+                {/* Hover overlay for additional subcategories */}
+                {hoveredSidebarCategory === index && sidebarActiveCategory !== index && (
+                  <div className="absolute left-full top-0 w-80 bg-white/95 backdrop-blur-xl shadow-2xl border border-gray-200/50 rounded-xl ml-4 z-60 overflow-hidden">
+                    <div className="bg-gradient-to-r from-primary to-pink-600 p-4 text-white">
+                      <h3 className="text-lg font-bold flex items-center space-x-2">
+                        <span className="text-xl">{category.emoji}</span>
+                        <span>{category.name}</span>
+                      </h3>
+                      <p className="text-purple-100 text-sm mt-1">{category.subcategories.length} subcategories available</p>
+                    </div>
+                    <div className="p-4 max-h-80 overflow-y-auto">
+                      <div className="space-y-2">
+                        {category.subcategories.map((subcategory) => (
+                          <a
+                            key={subcategory}
+                            href="#"
+                            className="flex items-center justify-between text-sm text-gray-700 hover:text-primary hover:bg-gradient-to-r hover:from-purple-50/80 hover:to-pink-50/80 backdrop-blur-sm px-4 py-3 rounded-lg transition-all duration-200 font-medium border border-transparent hover:border-purple-100/50 group"
+                          >
+                            <span>{subcategory}</span>
+                            <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-primary transform group-hover:translate-x-1 transition-all duration-200" />
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>

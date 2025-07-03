@@ -37,34 +37,25 @@ const LatestProducts = () => {
   const visibleProducts = displayedProducts.slice(currentIndex, currentIndex + productsPerPage);
 
   const renderStars = (rating) => {
-    const stars = [];
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-    
-    for (let i = 0; i < fullStars; i++) {
-      stars.push(<Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />);
-    }
-    
-    if (hasHalfStar) {
-      stars.push(<Star key="half" className="w-4 h-4 fill-yellow-400/50 text-yellow-400" />);
-    }
-    
-    while (stars.length < 5) {
-      stars.push(<Star key={`empty-${stars.length}`} className="w-4 h-4 text-gray-300" />);
-    }
-    
-    return stars;
+    return [...Array(5)].map((_, index) => (
+      <Star
+        key={index}
+        size={12}
+        className={`${
+          index < Math.floor(rating) 
+            ? 'fill-yellow-400 text-yellow-400' 
+            : 'text-gray-300'
+        }`}
+      />
+    ));
   };
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 lg:px-8">
       {/* Header */}
-      <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-semibold text-primary-six">Latest Products</h2>
-        <button className="flex items-center text-primary-six hover:text-primary font-medium">
-          View All
-          <ChevronRight className="w-5 h-5 ml-1" />
-        </button>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Latest Products</h1>
+        <p className="text-gray-600">Discover our newest collection of premium products.</p>
       </div>
 
       {/* Products Container */}
@@ -73,94 +64,91 @@ const LatestProducts = () => {
         <button
           onClick={prevSlide}
           disabled={currentIndex === 0}
-          className={`absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg border flex items-center justify-center transition-all ${
+          className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 bg-white shadow-lg rounded-full p-2 transition-colors ${
             currentIndex === 0 
               ? 'opacity-50 cursor-not-allowed' 
-              : 'hover:bg-gray-50 hover:shadow-xl'
+              : 'hover:bg-gray-50 cursor-pointer'
           }`}
         >
-          <ChevronLeft className="w-5 h-5 text-gray-600" />
+          <ChevronLeft size={20} className="text-gray-600" />
         </button>
 
         <button
           onClick={nextSlide}
           disabled={currentIndex >= displayedProducts.length - productsPerPage}
-          className={`absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-white shadow-lg border flex items-center justify-center transition-all ${
+          className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 bg-white shadow-lg rounded-full p-2 transition-colors ${
             currentIndex >= displayedProducts.length - productsPerPage
               ? 'opacity-50 cursor-not-allowed' 
-              : 'hover:bg-primary-bg hover:shadow-xl'
+              : 'hover:bg-gray-50 cursor-pointer'
           }`}
         >
-          <ChevronRight className="w-5 h-5 text-gray-600" />
+          <ChevronRight size={20} className="text-gray-600" />
         </button>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 px-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
           {visibleProducts.map((product) => {
             const discountedPrice = calculateDiscountedPrice(product.price, product.discount);
             
             return (
-              <div
-                key={product._id}
-                className="bg-white rounded-lg border border-gray-200 hover:shadow-lg transition-all duration-300 hover:border-gray-300 group flex flex-col h-full"
-              >
+              <div key={product._id} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow flex flex-col h-full">
                 {/* Product Image */}
-                <div className="relative aspect-square overflow-hidden rounded-t-lg bg-gray-100">
-                  {product.discount > 0 && (
-                    <div className="absolute top-2 left-2 z-10">
-                      <span className="bg-primary text-white text-xs font-medium px-2 py-1 rounded">
-                        {product.discount}%
-                      </span>
-                    </div>
-                  )}
+                <div className="relative">
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-48 object-cover"
                     onError={(e) => {
                       e.target.src = `https://via.placeholder.com/300x300/f3f4f6/9ca3af?text=${product.name.charAt(0)}`;
                     }}
                   />
+                  {/* Discount Badge */}
+                  {product.discount > 0 && (
+                    <div className="absolute top-3 left-3 bg-primary text-white text-xs font-medium px-2 py-1 rounded">
+                      -{product.discount}%
+                    </div>
+                  )}
                 </div>
 
-                {/* Product Info - Flex container that grows */}
-                <div className="p-3 flex flex-col flex-grow">
+                {/* Product Details */}
+                <div className="p-4 flex flex-col flex-grow">
                   {/* Brand */}
-                  <div className="text-xs text-gray-500 mb-1 font-medium">
+                  <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">
                     {product.brand}
-                  </div>
+                  </p>
 
                   {/* Product Name */}
-                  <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 leading-tight">
+                  <h3 className="text-sm font-medium text-gray-900 mb-2 line-clamp-2 flex-grow">
                     {product.name}
                   </h3>
 
                   {/* Rating */}
-                  <div className="flex items-center mb-2">
-                    <div className="flex">
+                  <div className="flex items-center mb-3">
+                    <div className="flex space-x-1">
                       {renderStars(product.rating)}
                     </div>
+                    <span className="text-xs text-gray-500 ml-2">
+                      ({product.reviews || 0})
+                    </span>
                   </div>
 
-                  {/* Price */}
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex flex-col">
-                      {product.discount > 0 && (
-                        <span className="text-xs text-gray-500 line-through">
-                          {formatPrice(product.price)}
-                        </span>
-                      )}
-                      <span className="text-sm font-bold text-primary">
-                        {formatPrice(discountedPrice)}
+                  {/* Pricing */}
+                  <div className="flex items-center space-x-2 mb-4">
+                    {product.discount > 0 && (
+                      <span className="text-xs text-gray-500 line-through">
+                        {formatPrice(product.price)}
                       </span>
-                    </div>
+                    )}
+                    <span className="text-sm font-bold text-primary">
+                      {formatPrice(discountedPrice)}
+                    </span>
                   </div>
 
-                  {/* Add to Cart Button - Push to bottom */}
+                  {/* Add to Cart Button - Always at bottom */}
                   <div className="mt-auto">
-                    <button className="w-full bg-white border border-red-200 text-primary py-2 px-3 rounded text-xs font-medium hover:bg-red-50 hover:border-red-300 transition-colors duration-200 flex items-center justify-center gap-2">
-                      <ShoppingCart className="w-3 h-3" />
-                      ADD TO CART
+                    <button className="w-full bg-white border border-primary text-primary py-2 px-4 rounded text-sm font-medium hover:bg-red-50 transition-colors flex items-center justify-center space-x-2">
+                      <ShoppingCart size={16} />
+                      <span>ADD TO CART</span>
                     </button>
                   </div>
                 </div>
@@ -168,21 +156,20 @@ const LatestProducts = () => {
             );
           })}
         </div>
-      </div>
 
-      {/* Pagination Dots */}
-      <div className="flex justify-center mt-6 space-x-2">
-        {Array.from({ length: Math.ceil(displayedProducts.length / productsPerPage) }).map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentIndex(index * productsPerPage)}
-            className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-              Math.floor(currentIndex / productsPerPage) === index
-                ? 'bg-primary'
-                : 'bg-gray-300 hover:bg-gray-400'
-            }`}
-          />
-        ))}
+        {/* Show message if no products */}
+        {visibleProducts.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-gray-500">No latest products available.</p>
+          </div>
+        )}
+
+        {/* Product Navigation Info */}
+        <div className="flex justify-center items-center mt-6 space-x-4 text-sm text-gray-600">
+          <span>
+            Showing {currentIndex + 1}-{Math.min(currentIndex + productsPerPage, displayedProducts.length)} of {displayedProducts.length} products
+          </span>
+        </div>
       </div>
     </div>
   );
